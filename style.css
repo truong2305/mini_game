@@ -83,7 +83,7 @@ body {
   position: relative;
 }
 
-.thanos i {
+.thanos .fa-gavel {
   position: absolute;
   font-size: 50px;
   left: 38%;
@@ -92,6 +92,18 @@ body {
           transform: rotate(-45deg);
   opacity: 0;
   color: #2db968;
+}
+
+.thanos .critical {
+  position: absolute;
+  left: 25%;
+  font-size: 1.2rem;
+  color: red;
+  font-weight: bold;
+}
+
+.thanos .critical i {
+  color: red;
 }
 
 .thanos .icon {
@@ -123,7 +135,7 @@ body {
 }
 
 .imgBg img {
-  width: 150px;
+  width: 100%;
   -webkit-animation: run 2s infinite;
           animation: run 2s infinite;
 }
@@ -139,8 +151,30 @@ body {
           transform: translateX(-100%) scaleX(-1);
 }
 
-.champ .imgBg img {
-  width: 150px;
+.bought {
+  cursor: pointer;
+}
+
+.bought img {
+  width: 40px;
+}
+
+.set-items {
+  text-align: left;
+  position: relative;
+  cursor: pointer;
+}
+
+.set-items .price {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.6;
+  background: black;
+}
+
+.set-items img {
+  width: 50px;
 }
 
 @-webkit-keyframes run {

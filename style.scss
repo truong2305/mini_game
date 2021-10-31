@@ -65,7 +65,7 @@ body {
 }
 .thanos {
     position: relative;
-    i {
+    .fa-gavel {
         position: absolute;
         font-size: 50px;
         left: 38%;
@@ -73,6 +73,16 @@ body {
         transform: rotate(-45deg);
         opacity: 0;
         color: rgb(45, 185, 104);
+    }
+    .critical {
+        position: absolute;
+        left: 25%;
+        font-size: 1.2rem;
+        color: red ;
+        font-weight: bold;
+        i {
+            color: red;
+        }
     }
     .icon {
         animation: attack 2s;
@@ -97,7 +107,7 @@ body {
     top: 0;
     left: 0;
     img {
-        width: 150px;
+        width: 100%;
         animation: run 2s infinite;
     }
 }
@@ -107,12 +117,29 @@ body {
     left: 100%;
     top: 50px;
     transform: translateX(-100%) scaleX(-1);
-       img {
-           width: 150px;
-       }
    }
 }
-
+.bought {
+    cursor: pointer;
+    img {
+        width: 40px;
+    }
+}
+.set-items {
+    text-align: left;
+    position: relative;
+    cursor: pointer;
+    .price {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 0.6;
+        background: black;
+    }
+    img {
+        width: 50px;
+    }
+}
 @keyframes run {
     0% {
         transform: translateY(0);
