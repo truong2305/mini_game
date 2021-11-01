@@ -1,228 +1,339 @@
+/** @format */
+
 body {
-    color:  white;
+  color: white;
 }
 .choose-champ {
-    display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
-    grid-gap: 0.5rem;
-    div {
-        cursor: pointer;
-        border-radius: 5px;
-        overflow: hidden;
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  grid-gap: 0.5rem;
+  div {
+    cursor: pointer;
+    border-radius: 5px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-  
+  }
 }
 .bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    z-index: -1;
-    background-image: url(./imgs/bg2.jpg);
-    background-size: cover;
-    filter: blur(4px);
-   
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: -1;
+  background-image: url(./imgs/bg2.jpg);
+  background-size: cover;
+  filter: blur(4px);
 }
 .level {
-    position: relative;
-    strong {
-        position: absolute;
-        right: 30px;
-        top: 30px;
-    }
+  position: relative;
+  strong {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+  }
 }
 .avt {
-    width: 100px;
-    height: 100px;
-    overflow: hidden;
-    border-radius: 50%;
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .count-down {
-    font-size: 60px;
-    font-weight: 500;
-    animation: count-down 6s forwards;
+  font-size: 60px;
+  font-weight: 500;
+  animation: count-down 6s forwards;
 }
 .heart {
-    border-radius: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+  &-loss {
+    background: rgb(235, 160, 160);
+    transition: 0.4s;
+    color: black;
     overflow: hidden;
-    &-loss {
-        background: rgb(235, 160, 160);
-        transition: 0.4s;
-        color: black;
-        overflow: hidden;
-    }
+  }
 }
 .thanos {
+  position: relative;
+  .fa-gavel {
+    position: absolute;
+    font-size: 50px;
+    left: 38%;
+    top: -35px;
+    transform: rotate(-45deg);
+    opacity: 0;
+    color: rgb(45, 185, 104);
+  }
+  .critical {
+    position: absolute;
+    left: 25%;
+    font-size: 1.2rem;
+    color: red;
+    font-weight: bold;
+    i {
+      color: red;
+    }
+  }
+  .icon {
+    animation: attack 2s;
+  }
+  &-attack {
     position: relative;
-    .fa-gavel {
-        position: absolute;
-        font-size: 50px;
-        left: 38%;
-        top: -35px;
-        transform: rotate(-45deg);
-        opacity: 0;
-        color: rgb(45, 185, 104);
+    &::after {
+      position: absolute;
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      top: 45%;
+      left: 74%;
+      animation: thanosAttack 2s;
     }
-    .critical {
-        position: absolute;
-        left: 25%;
-        font-size: 1.2rem;
-        color: red ;
-        font-weight: bold;
-        i {
-            color: red;
-        }
-    }
-    .icon {
-        animation: attack 2s;
-    }
-    &-attack {
-        position: relative;
-        &::after {
-            position: absolute;
-            content: '';
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            top: 45%;
-            left: 74%;
-            animation: thanosAttack 2s;
-        }
-    }
+  }
 }
 .imgBg {
+  position: absolute;
+  width: 160px;
+  top: 0;
+  left: 0;
+  animation: run 2s infinite;
+  img {
+    width: 100%;
+  }
+}
+.zuka {
+  animation: zuka 1s;
+}
+.krixi {
+  &::after {
     position: absolute;
-    width: 150px;
-    top: 0;
-    left: 0;
-    img {
-        width: 100%;
-        animation: run 2s infinite;
-    }
+    content: "";
+    width: 2px;
+    height: 100px;
+    top: -100px;
+    left: 300%;
+    background: rgb(255, 255, 255);
+    box-shadow: 0 0 5px 2px white;
+    transform: rotate(-65deg);
+    animation: krixi2 1s infinite;
+  }
+  &::before {
+    position: absolute;
+    content: "";
+    width: 2px;
+    height: 100px;
+    top: -50px;
+    left: 250%;
+    background: rgb(255, 255, 255);
+    box-shadow: 0 0 5px 2px white;
+    transform: rotate(-65deg);
+    animation: krixi1 1s infinite;
+  }
+}
+.wish {
+  &::after {
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgb(247, 41, 41);
+    box-shadow: 0 0 10px 5px rgb(255, 61, 61), 0 0 30px 15px rgb(250, 101, 101);
+    bottom: 67px;
+    right: 5px;
+  }
+  &::before {
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgb(247, 41, 41);
+    box-shadow: 0 0 10px 5px rgb(255, 61, 61), 0 0 30px 15px rgb(250, 101, 101);
+    bottom: 70px;
+    left: 20px;
+  }
+}
+.skud {
+  animation: skud 4s;
+}
+@keyframes krixi1 {
+  50%,
+  100% {
+    top: 30px;
+    left: 450%;
+  }
+  51% {
+    top: -100px;
+    left: 300%;
+  }
+}
+@keyframes krixi2 {
+  50%,
+  100% {
+    top: 30px;
+    left: 450%;
+  }
+  51% {
+    top: -50px;
+    left: 250%;
+  }
+}
+@keyframes skud {
+  0%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes zuka {
+  60% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(550px);
+  }
 }
 .champ {
-   position: relative;
-   .imgBg {
-    left: 100%;
-    top: 50px;
-    transform: translateX(-100%) scaleX(-1);
-   }
+  position: relative;
+  .imgBg {
+    width: 140px;
+    bottom: 0;
+    left: calc(100% - 150px);
+    display: flex;
+    justify-content: end;
+    img {
+      width: 100%;
+      height: auto;
+    }
+    strong {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      width: 200px;
+    }
+  }
+}
+.skill {
+  position: relative;
+  span {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 .bought {
-    cursor: pointer;
-    img {
-        width: 40px;
-    }
+  cursor: pointer;
+  img {
+    width: 40px;
+  }
 }
 .set-items {
-    text-align: left;
-    position: relative;
-    cursor: pointer;
-    .price {
-        position: absolute;
-        top: 0;
-        left: 0;
-        font-size: 0.6;
-        background: black;
-    }
-    img {
-        width: 50px;
-    }
+  text-align: left;
+  position: relative;
+  cursor: pointer;
+  .price {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.6;
+    background: black;
+  }
+  img {
+    width: 50px;
+  }
 }
 @keyframes run {
-    0% {
-        transform: translateY(0);
-    }
-   
-    25% {
-        transform: translateY(5px);
-    }
-   
-    50% {
-        transform: translateY(0px);
-    }
-    75% {
-        transform: translateY(3px);
-    }
-    100% {
-        transform: translateY(0);
-    }
+  0% {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(5px);
+  }
+
+  50% {
+    transform: translateY(0px);
+  }
+  75% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 @keyframes thanosAttack {
-    10% {
-        background: yellow;
-        transform: scale(2);
-        box-shadow: 0 0 10px 8px rgb(250, 149, 91);
-    }
-    40% {
-        background: rgb(225, 253, 124);
-        box-shadow: 0 0 10px 8px rgb(242, 253, 90),0 0 20px 15px rgb(126, 189, 107),0 0 50px 35px rgb(255, 186, 58);
-    }
-   
+  10% {
+    background: yellow;
+    transform: scale(2);
+    box-shadow: 0 0 10px 8px rgb(250, 149, 91);
+  }
+  40% {
+    background: rgb(225, 253, 124);
+    box-shadow: 0 0 10px 8px rgb(242, 253, 90), 0 0 20px 15px rgb(126, 189, 107), 0 0 50px 35px rgb(255, 186, 58);
+  }
 }
 @keyframes attack {
-    15% {
-        opacity: 1;
-    }
-    35% {
-        transform: rotate(-45deg);
-    }
-    45% {
-        transform: rotate(45deg);
-    }
-    90% {
-        transform: rotate(45deg);
-        opacity: 1;
-    }
+  15% {
+    opacity: 1;
+  }
+  35% {
+    transform: rotate(-45deg);
+  }
+  45% {
+    transform: rotate(45deg);
+  }
+  90% {
+    transform: rotate(45deg);
+    opacity: 1;
+  }
 }
 ul {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 0;
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
 }
 @keyframes count-down {
-    0% {
-        opacity: 0.7;
-        transform: scale(0.7);
-    }
-    10% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    35% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    25% {
-        opacity: 0;
-        transform: scale(0.7);
-    }
-    60% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0;
-        transform: scale(0.7);
-    }
-    85% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    75% {
-        opacity: 0;
-        transform: scale(0.7);
-    }
-    
+  0% {
+    opacity: 0.7;
+    transform: scale(0.7);
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  25% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  85% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  75% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
 }

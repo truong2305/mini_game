@@ -10,35 +10,55 @@ const app = Vue.createApp({
           img: "./imgs/kribg.png",
           dame: 6,
           armor: 5,
-          ap: 20,
+          ap: 15,
           critical: 0,
+          skill: {
+            name: "Mưa sao băng",
+            title: "Mưa sao băng: Gây 4 đợt sát thương liên tiếp bằng phép thuật",
+            active: "mưa sao băng",
+          },
         },
         {
           name: "zuka",
           avt: "./imgs/zuka.jpg",
-          img: "./imgs/sk.png",
-          dame: 12,
+          img: "./imgs/zk.png",
+          dame: 10,
           armor: 10,
           ap: 0,
           critical: 0,
+          skill: {
+            name: "Trầm trọng lực",
+            title: "Trầm trọng lực: Gây 2 lần sát thương, lần 2 yếu hơn",
+            active: "trầm trọng lực",
+          },
         },
         {
           name: "skud",
           avt: "./imgs/skud.jpg",
           img: "./imgs/sk.png",
           dame: 8,
-          armor: 20,
+          armor: 15,
           ap: 0,
           critical: 0,
+          skill: {
+            name: "Găng hung thần",
+            title: "Găng hung thần: miễn thương 100%",
+            active: "miễn thương",
+          },
         },
         {
           name: "wish",
           avt: "./imgs/wi.jpg",
           img: "./imgs/wish.png",
-          dame: 10,
+          dame: 8,
           armor: 5,
           ap: 0,
-          critical: 20,
+          critical: 10,
+          skill: {
+            name: "Pháo cao xạ",
+            title: "Pháo cao xạ: 100% chí mạng + 50% hút máu",
+            active: "pháo cao xạ",
+          },
         },
       ],
       levels: [1, 2, 3, 4, 5, 6],
@@ -50,34 +70,34 @@ const app = Vue.createApp({
         {
           img: "./imgs/sach.png",
           name: "sách thánh",
-          title: "+ 20 SMPT",
+          title: "+ 15 SMPT",
           dame: 0,
-          ap: 20,
+          ap: 15,
           armor: 0,
           critical: 0,
         },
         {
           img: "./imgs/khien.png",
           name: "khiên huyền thoai",
-          title: "+ 15% giảm ST",
+          title: "+ 18% giảm ST",
           dame: 0,
           ap: 0,
-          armor: 15,
+          armor: 18,
           critical: 0,
         },
         {
           img: "./imgs/thanhkiem.png",
           name: "thánh kiếm",
-          title: "+ 8 ST và 15% chí mạng",
-          dame: 8,
+          title: "+ 5 ST và 12% chí mạng",
+          dame: 6,
           ap: 0,
           armor: 0,
-          critical: 15,
+          critical: 12,
         },
         {
           img: "./imgs/kiem.png",
           name: "kiếm fenrir",
-          title: "+ 10 sát thương",
+          title: "+ 10 ST",
           dame: 10,
           ap: 0,
           armor: 0,
@@ -104,11 +124,16 @@ const app = Vue.createApp({
       attacking: false,
       isThanosAttack: false,
       waitAttack: false,
-      isCritical : false,
+      isCritical: false,
 
       currentLevel: 1,
       lv6: false,
       audio: false,
+      useSkill: false,
+      countTimeSkill: 3,
+      skillOfChamp: "",
+      skillActive: 1,
+      skilling: false,
     };
   },
   methods: {
@@ -133,6 +158,8 @@ const app = Vue.createApp({
       this.reset();
       this.isCountDown = true;
       this.waitAttack = false;
+      this.countTimeSkill = 3;
+      this.skillActive = 1;
       let interval = setInterval(() => {
         this.countDown -= 1;
       }, 1500);
@@ -140,7 +167,7 @@ const app = Vue.createApp({
       setTimeout(() => {
         clearInterval(interval);
         this.isCountDown = false;
-        this.countDown = 2;
+        this.countDown = 3;
         if (this.currentLevel === 6) this.thanosAttack();
       }, 3900);
     },
@@ -158,6 +185,12 @@ const app = Vue.createApp({
         }
         this.end = true;
         this.isRun = checkRun;
+        if (checkRun) {
+          let audio = new Audio("./sounds/thanos.mp3");
+          audio.volume = 0.1;
+          this.isThanosAttack = true;
+          audio.play();
+        }
       }
     },
     backHome() {
@@ -165,8 +198,8 @@ const app = Vue.createApp({
       this.isLose = false;
     },
     thanosAttack() {
-      let randomDame = Math.round(7 * this.currentLevel + Math.random() * (10 + this.currentLevel*2))
-      let dameThanos = randomDame - Math.round(randomDame/100*this.champ.armor)
+      let randomDame = Math.round(7 * this.currentLevel + Math.random() * (10 + this.currentLevel * 2));
+      let dameThanos = randomDame - Math.round((randomDame / 100) * this.champ.armor);
       let audio = new Audio("./sounds/thanos.mp3");
       audio.volume = 0.1;
       if (this.currentLevel === 6) {
@@ -176,13 +209,17 @@ const app = Vue.createApp({
           audio = new Audio("./sounds/sad.mp3");
           audio.play();
           this.lv6 = true;
-        }, 1000);
+        }, 2000);
       }
       this.champHeart -= dameThanos;
       audio.play();
       this.isThanosAttack = true;
+
       if (this.champHeart < 1) {
         this.champHeart = 0;
+        let loseAudio = new Audio("./sounds/lose.mp3");
+        loseAudio.volume = 0.2;
+        loseAudio.play();
         this.result(true);
       } else {
         this.heartChampLoss = dameThanos;
@@ -196,37 +233,93 @@ const app = Vue.createApp({
       if (this.waitAttack || this.currentLevel === 6) return;
       else {
         this.waitAttack = true;
-        let randomDame = this.champ.dame + Math.random() * 10
-        let dame = randomDame - (10*this.currentLevel*randomDame/100);
+        let randomDame = this.champ.dame + Math.random() * 10;
+        let dame = Math.round(randomDame - (13 * this.currentLevel * randomDame) / 100);
         this.attacking = true;
         this.isThanosAttack = false;
         let audio = new Audio("./sounds/champ.mp3");
         audio.volume = 0.1;
+        if (this.skillOfChamp.name !== "" && this.useSkill === true) {
+          this.skilling = true;
+          if (this.skillOfChamp.name == "skud") {
+            setTimeout(() => {
+              this.skilling = false;
+            }, 4000);
+          } else {
+            setTimeout(() => {
+              this.skilling = false;
+            }, 2000);
+          }
+        }
         setTimeout(() => {
           this.attacking = false;
-          if( Math.random() < this.champ.critical/100)
-        {
-          this.isCritical = true
-            dame *= 1.5
-            
-        }
-          this.thanosHeart -= Math.round(dame);
-          this.coin += Math.round(dame);
+          if (this.skillOfChamp.name === "wish") {
+            let critical = 100 - this.champ.critical;
+            this.champ.critical += critical;
+            this.champHeart += dame;
+            if (this.champHeart > 100) this.champHeart = 100;
+            setTimeout(() => {
+              this.champ.critical -= critical;
+            }, 2000);
+          }
+          if (Math.random() < this.champ.critical / 100) {
+            this.isCritical = true;
+            dame *= 2;
+          }
+          if (this.skillOfChamp.name === "zuka") {
+            this.thanosHeart -= Math.round(dame / 1.3);
+            this.coin += Math.round(dame / 1.3);
+          }
+          if (this.skillOfChamp.name === "skud") {
+            let armor = 100 - this.champ.armor;
+            this.champ.armor += armor;
+            setTimeout(() => {
+              this.champ.armor -= armor;
+            }, 2000);
+          }
+          if (this.skillOfChamp.name === "krixi") {
+            let dameAp = this.champ.ap / 1.2;
+            dame += 3 * Math.round(dameAp - (this.currentLevel * 11 * dameAp) / 100);
+          }
+
+          this.thanosHeart -= dame;
+          this.coin += dame;
           audio.play();
           if (this.thanosHeart < 1) {
+            let winAudio = new Audio("./sounds/win.mp3");
+            winAudio.volume = 0.2;
+            winAudio.play();
+            this.isCritical = false;
             this.thanosHeart = 0;
             this.result(false);
           } else {
-            this.heartThanosLoss = Math.round(dame);
+            this.heartThanosLoss = dame;
             setTimeout(() => {
               this.heartThanosLoss = 0;
             }, 600);
             setTimeout(() => {
-              this.isCritical = false
+              this.isCritical = false;
               this.thanosAttack();
             }, 1500);
           }
         }, 1000);
+      }
+    },
+    skill(champ) {
+      if (this.countTimeSkill === 3 && this.useSkill === false && this.currentLevel !== 6) {
+        let interval = setInterval(() => {
+          this.countTimeSkill -= 1;
+        }, 1000);
+        this.skillActive = 0;
+        this.skillOfChamp = champ;
+        this.useSkill = true;
+        setTimeout(() => {
+          clearInterval(interval);
+          this.useSkill = false;
+          setTimeout(() => {
+            this.skillOfChamp = "";
+          }, 1000);
+        }, 2900);
       }
     },
     buyItem(item) {
@@ -249,6 +342,20 @@ const app = Vue.createApp({
     },
   },
   watch: {
+    champ(current, pre) {
+      let coin = 0;
+      this.set.forEach((value) => {
+        coin += 100;
+        if (pre.dame) {
+          pre.dame -= value.dame;
+          pre.ap -= value.ap;
+          pre.critical -= value.critical;
+          pre.armor -= value.armor;
+        }
+      });
+      this.coin += coin;
+      this.set = [];
+    },
     audio() {
       let audio = new Audio("./sounds/bg.mp3");
       audio.play();

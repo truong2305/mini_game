@@ -12,17 +12,17 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <link rel="icon" href="./imgs/kribg.png">
+    <link rel="icon" href="./imgs/kribg.png" />
     <link rel="stylesheet" href="./style.css" />
     <title>Liên quân - Infinity War</title>
   </head>
   <body>
     <div id="app">
-      <div class="py-3 bg-dark text-white text-center"><h3>Liên quân - Infinity War</h3>
+      <div class="py-3 bg-dark text-white text-center">
+        <h3>Liên quân - Infinity War</h3>
         <small class="d-block">Thắng bại tại thằng làm game</small>
       </div>
-      <div class="bg">
-      </div>
+      <div class="bg"></div>
       <div class="level" v-if="starting"><strong>Màn {{ currentLevel }}</strong></div>
       <div class="container mt-5">
         <div v-if="chooseChamp">
@@ -31,7 +31,6 @@
           <div class="choose-champ">
             <div v-for="(champ, index) of champs" @click="moveToStart(champ)">
               <img :src="champ.avt" alt="" />
-              
             </div>
           </div>
         </div>
@@ -40,39 +39,45 @@
             <div class="avt mx-auto"><img :src="champ.avt" alt="" /></div>
             <div class="mt-1 mb-3"><strong>{{ champ.name }}</strong></div>
             <div class="heart border border-success d-flex">
-              <div :style="{width: champHeart + '%'}" style="transition: 0.4s;" class="bg-success py-3"></div>
-              <div :style="{width: heartChampLoss + '%' }" class="heart-loss d-flex align-items-center"><span v-show=" heartChampLoss != 0">{{- heartChampLoss }}</span></div>
+              <div :style="{width: champHeart + '%'}" style="transition: 0.4s" class="bg-success py-3"></div>
+              <div :style="{width: heartChampLoss + '%' }" class="heart-loss d-flex align-items-center">
+                <span v-show=" heartChampLoss != 0">{{- heartChampLoss }}</span>
+              </div>
             </div>
-            <div> {{ champHeart }} hp</div>
-            <div class="imgBg">
-              <img :src="champ.img" alt="">
+            <div>{{ champHeart }} hp</div>
+            <div class="imgBg" :class="{ [champ.name] : skilling}">
+              <img :src="champ.img" alt="" />
+              <strong v-show="useSkill">{{ this.champ.skill.active }}</strong>
             </div>
           </div>
           <div class="col-4">
             <strong>Tỉ số</strong>
             <div>{{ score.champ }} : {{ score.thanos }}</div>
             <template v-if="isLose">
-              <h1 >Thua</h1>
+              <h1>Thua</h1>
               <div v-show="isRun">Chạy đâu cho thoát !!!</div>
             </template>
             <h1 v-if="!isLose && end">Thắng</h1>
             <div class="mt-5 count-down" v-if="isCountDown">{{ countDown }}</div>
           </div>
           <div class="col-4 text-center thanos">
-            
             <i class="fas fa-gavel" :class="{ icon : attacking }"></i>
-            <div v-show="isCritical && heartThanosLoss != 0" class="critical"><i class="fas fa-fire-alt me-2"></i>{{ heartThanosLoss }}</div>
+            <div v-show="isCritical && heartThanosLoss != 0" class="critical">
+              <i class="fas fa-fire-alt me-2"></i>{{ heartThanosLoss }}
+            </div>
             <div class="avt mx-auto" :class="{ 'thanos-attack' : isThanosAttack }">
               <img src="https://ss-images.saostar.vn/w800/2019/02/02/4544689/page.jpg" alt="" />
             </div>
             <div class="mt-1 mb-3"><strong>Thanos</strong></div>
             <div class="heart border border-danger d-flex">
-              <div :style="{width: thanosHeart + '%'}" style="transition: 0.4s;"  class="bg-danger py-3"></div>
-              <div :style="{width: heartThanosLoss + '%' }" class="heart-loss d-flex align-items-center"><span v-show=" heartThanosLoss != 0">{{- heartThanosLoss }}</span></div>
+              <div :style="{width: thanosHeart + '%'}" style="transition: 0.4s" class="bg-danger py-3"></div>
+              <div :style="{width: heartThanosLoss + '%' }" class="heart-loss d-flex align-items-center">
+                <span v-show=" heartThanosLoss != 0">{{- heartThanosLoss }}</span>
+              </div>
             </div>
-            <div> {{ thanosHeart }} hp</div>
+            <div>{{ thanosHeart }} hp</div>
             <div class="imgBg">
-              <img src="./imgs/than.png" alt="">
+              <img src="./imgs/than.png" alt="" />
             </div>
           </div>
           <div class="col-3 mt-4">
@@ -82,16 +87,15 @@
                 {{ coin }} <span v-if="set.length == 0" class="ms-3">chưa mua đồ</span>
               </div>
               <div v-for="(item,index) in set" class="bought ms-3" @click="removeItem(index)">
-                  <img :src="item.img" alt="">
+                <img :src="item.img" alt="" />
               </div>
             </div>
             <div class="mt-5">
               <div class="set-items mt-3" v-for="item in items" @click="buyItem(item)">
-                <img :src="item.img" alt="">
+                <img :src="item.img" alt="" />
                 {{ item.name }} <small>({{ item.title }})</small>
                 <div class="price">100</div>
-                
-            </div>
+              </div>
             </div>
           </div>
           <div class="col-6 mt-4">
@@ -100,21 +104,32 @@
                 <div>
                   <strong>Chọn màn</strong>
                 </div>
-               <div>
-                 <div v-for="(level, index) in levels"><input type="radio" v-model="currentLevel" :value="++index" name="level" :id="index"><label :for="index">&nbsp;{{level}} viên</label></div>
-               </div>
+                <div>
+                  <div v-for="(level, index) in levels">
+                    <input type="radio" v-model="currentLevel" :value="++index" name="level" :id="index" /><label
+                      :for="index"
+                      >&nbsp;{{level}} viên</label
+                    >
+                  </div>
+                </div>
                 <button @click="start" class="btn bg-dark text-white mt-4">Chiến</button>
               </template>
               <template v-if="starting && !isCountDown">
-                <button class="btn btn-primary text-white" @click="champAttack()">Đánh thường</button>
-                <button class="btn btn-danger text-white mx-3">Skill</button>
-                <button class="btn btn-success text-white mx-3">Buff máu</button>
-                <button class="btn btn-warning" @click="result(true, true)">Bỏ chạy</button>
+                <button class="btn btn-primary text-white" @click="champAttack()">Tấn công</button>
+                <button class="btn btn-danger text-white mx-3" :class="{skill : useSkill}" @click="skill(champ)">
+                  {{ this.champ.skill.name }} <span v-show="useSkill">{{ countTimeSkill }}</span>
+                </button>
+                <button class="btn btn-warning text-white" @click="result(true, true)">Bỏ chạy</button>
+                <div class="mt-5">
+                  <p>{{ champ.skill.title }}</p>
+                  <p>lượt còn lại: {{ skillActive }}</p>
+                  <p>*sử dụng trước khi tấn công, tác dụng trong 3s</p>
+                </div>
               </template>
             </template>
             <button v-if="lv6" class="btn btn-danger" @click="backHome">Xóa game</button>
             <div v-if="isLose">
-              Thất bại là do chưa mua đồ
+              Lưu ý lựa chọn tướng và đồ hợp lý
               <button class="btn btn-danger d-block mx-auto mt-3" @click="backHome">Trả thù</button>
             </div>
           </div>

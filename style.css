@@ -1,3 +1,4 @@
+/** @format */
 body {
   color: white;
 }
@@ -117,7 +118,7 @@ body {
 
 .thanos-attack::after {
   position: absolute;
-  content: '';
+  content: "";
   width: 4px;
   height: 4px;
   border-radius: 50%;
@@ -129,15 +130,167 @@ body {
 
 .imgBg {
   position: absolute;
-  width: 150px;
+  width: 160px;
   top: 0;
   left: 0;
+  -webkit-animation: run 2s infinite;
+          animation: run 2s infinite;
 }
 
 .imgBg img {
   width: 100%;
-  -webkit-animation: run 2s infinite;
-          animation: run 2s infinite;
+}
+
+.zuka {
+  -webkit-animation: zuka 1s;
+          animation: zuka 1s;
+}
+
+.krixi::after {
+  position: absolute;
+  content: "";
+  width: 2px;
+  height: 100px;
+  top: -100px;
+  left: 300%;
+  background: white;
+  -webkit-box-shadow: 0 0 5px 2px white;
+          box-shadow: 0 0 5px 2px white;
+  -webkit-transform: rotate(-65deg);
+          transform: rotate(-65deg);
+  -webkit-animation: krixi2 1s infinite;
+          animation: krixi2 1s infinite;
+}
+
+.krixi::before {
+  position: absolute;
+  content: "";
+  width: 2px;
+  height: 100px;
+  top: -50px;
+  left: 250%;
+  background: white;
+  -webkit-box-shadow: 0 0 5px 2px white;
+          box-shadow: 0 0 5px 2px white;
+  -webkit-transform: rotate(-65deg);
+          transform: rotate(-65deg);
+  -webkit-animation: krixi1 1s infinite;
+          animation: krixi1 1s infinite;
+}
+
+.wish::after {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f72929;
+  -webkit-box-shadow: 0 0 10px 5px #ff3d3d, 0 0 30px 15px #fa6565;
+          box-shadow: 0 0 10px 5px #ff3d3d, 0 0 30px 15px #fa6565;
+  bottom: 67px;
+  right: 5px;
+}
+
+.wish::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f72929;
+  -webkit-box-shadow: 0 0 10px 5px #ff3d3d, 0 0 30px 15px #fa6565;
+          box-shadow: 0 0 10px 5px #ff3d3d, 0 0 30px 15px #fa6565;
+  bottom: 70px;
+  left: 20px;
+}
+
+.skud {
+  -webkit-animation: skud 4s;
+          animation: skud 4s;
+}
+
+@-webkit-keyframes krixi1 {
+  50%,
+  100% {
+    top: 30px;
+    left: 450%;
+  }
+  51% {
+    top: -100px;
+    left: 300%;
+  }
+}
+
+@keyframes krixi1 {
+  50%,
+  100% {
+    top: 30px;
+    left: 450%;
+  }
+  51% {
+    top: -100px;
+    left: 300%;
+  }
+}
+
+@-webkit-keyframes krixi2 {
+  50%,
+  100% {
+    top: 30px;
+    left: 450%;
+  }
+  51% {
+    top: -50px;
+    left: 250%;
+  }
+}
+
+@keyframes krixi2 {
+  50%,
+  100% {
+    top: 30px;
+    left: 450%;
+  }
+  51% {
+    top: -50px;
+    left: 250%;
+  }
+}
+
+@-webkit-keyframes skud {
+  0%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes skud {
+  0%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes zuka {
+  60% {
+    -webkit-transform: translateX(-200px);
+            transform: translateX(-200px);
+  }
+  100% {
+    -webkit-transform: translateX(550px);
+            transform: translateX(550px);
+  }
+}
+
+@keyframes zuka {
+  60% {
+    -webkit-transform: translateX(-200px);
+            transform: translateX(-200px);
+  }
+  100% {
+    -webkit-transform: translateX(550px);
+            transform: translateX(550px);
+  }
 }
 
 .champ {
@@ -145,10 +298,39 @@ body {
 }
 
 .champ .imgBg {
-  left: 100%;
-  top: 50px;
-  -webkit-transform: translateX(-100%) scaleX(-1);
-          transform: translateX(-100%) scaleX(-1);
+  width: 140px;
+  bottom: 0;
+  left: calc(100% - 150px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+}
+
+.champ .imgBg img {
+  width: 100%;
+  height: auto;
+}
+
+.champ .imgBg strong {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 200px;
+}
+
+.skill {
+  position: relative;
+}
+
+.skill span {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .bought {
